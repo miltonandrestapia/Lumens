@@ -1,0 +1,26 @@
+runtime: php55
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /(.+\.php)$
+  script: \1
+
+- url: /(.+\.(gif|png|jpg|html|css|js|ttf|otf|mp4|json|xml|php|xlsx|TTF))$
+  static_files: \1
+  upload: .+\.(gif|png|jpg|html|css|js|ttf|otf|mp4|json|xml|php|xlsx|TTF)$
+  application_readable: true
+  secure: always
+
+# Envio general
+- url: .*
+  script: index.html
+  secure: always
+
+automatic_scaling:
+  target_cpu_utilization: 0.85
+  min_instances: 1
+  max_instances: 5
+  min_pending_latency: 30ms
+  max_pending_latency: automatic
+  max_concurrent_requests: 50

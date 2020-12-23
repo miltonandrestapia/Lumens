@@ -1,0 +1,18 @@
+runtime: php55
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /(.+\.php)$
+  script: \1
+
+- url: /(.+\.(gif|png|jpg|html|css|js|ttf|otf|mp4|json|xml))$
+  static_files: \1
+  upload: .+\.(gif|png|jpg|html|css|js|ttf|otf|mp4|json|xml)$
+  application_readable: true
+  secure: always
+
+# Envio general
+- url: .*
+  script: index.html
+  secure: always

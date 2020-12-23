@@ -1,0 +1,70 @@
+StartFontMetrics 4.1
+Notice Converted by PHP-font-lib
+Comment https://github.com/PhenX/php-font-lib
+EncodingScheme FontSpecific
+Copyright Copyright 1993-4 Rivers Edge Corp. All rights reserved. Developed by Don Lyckman. Updated 12/6/93 v4.0
+FontName Code39SevenText
+FontSubfamily Normal
+UniqueID Edge:Code39SevenText
+FullName Code39SevenText
+Version 1.0 Wed Jan 12 15:51:50 1994
+PostScriptName Code39SevenText
+Weight Medium
+ItalicAngle 0
+IsFixedPitch false
+UnderlineThickness 0
+UnderlinePosition 0
+FontHeightOffset 0
+Ascender 1080
+Descender -200
+FontBBox 0 -200 540 1080
+StartCharMetrics 50
+U 32 ; WX 580 ; N space ; G 3
+U 33 ; WX 580 ; N exclam ; G 4
+U 35 ; WX 580 ; N numbersign ; G 5
+U 36 ; WX 580 ; N dollar ; G 6
+U 37 ; WX 580 ; N percent ; G 7
+U 42 ; WX 580 ; N asterisk ; G 8
+U 43 ; WX 580 ; N plus ; G 9
+U 45 ; WX 580 ; N hyphen ; G 10
+U 46 ; WX 580 ; N period ; G 11
+U 47 ; WX 580 ; N slash ; G 12
+U 48 ; WX 580 ; N zero ; G 13
+U 49 ; WX 580 ; N one ; G 14
+U 50 ; WX 580 ; N two ; G 15
+U 51 ; WX 580 ; N three ; G 16
+U 52 ; WX 580 ; N four ; G 17
+U 53 ; WX 580 ; N five ; G 18
+U 54 ; WX 580 ; N six ; G 19
+U 55 ; WX 580 ; N seven ; G 20
+U 56 ; WX 580 ; N eight ; G 21
+U 57 ; WX 580 ; N nine ; G 22
+U 65 ; WX 580 ; N A ; G 23
+U 66 ; WX 580 ; N B ; G 24
+U 67 ; WX 580 ; N C ; G 25
+U 68 ; WX 580 ; N D ; G 26
+U 69 ; WX 580 ; N E ; G 27
+U 70 ; WX 580 ; N F ; G 28
+U 71 ; WX 580 ; N G ; G 29
+U 72 ; WX 580 ; N H ; G 30
+U 73 ; WX 580 ; N I ; G 31
+U 74 ; WX 580 ; N J ; G 32
+U 75 ; WX 580 ; N K ; G 33
+U 76 ; WX 580 ; N L ; G 34
+U 77 ; WX 580 ; N M ; G 35
+U 78 ; WX 580 ; N N ; G 36
+U 79 ; WX 580 ; N O ; G 37
+U 80 ; WX 580 ; N P ; G 38
+U 81 ; WX 580 ; N Q ; G 39
+U 82 ; WX 580 ; N R ; G 40
+U 83 ; WX 580 ; N S ; G 41
+U 84 ; WX 580 ; N T ; G 42
+U 85 ; WX 580 ; N U ; G 43
+U 86 ; WX 580 ; N V ; G 44
+U 87 ; WX 580 ; N W ; G 45
+U 88 ; WX 580 ; N X ; G 46
+U 89 ; WX 580 ; N Y ; G 47
+U 90 ; WX 580 ; N Z ; G 48
+U 160 ; WX 580 ; N nbspace ; G 49
+EndCharMetrics
+EndFontMetrics
