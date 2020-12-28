@@ -246,7 +246,7 @@
 .codbarra{
 	
 				
-					font-size: 33px;
+					font-size: 32px;
 					font-family: LetraBarras;
 					font-weight: 50;
 					margin: 0;
@@ -761,7 +761,6 @@ $cons8=0;
                       Lectura <br><br>
                       Telefono <br><br>
                       </td>
-
                     </tr >   
       </table>  
 

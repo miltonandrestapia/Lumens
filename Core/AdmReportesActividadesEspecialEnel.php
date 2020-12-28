@@ -87,7 +87,7 @@ function cambiotipo(){
     	$("#divBusqueda2").show();
 	}else{
 
-      if ( $("#Reporte").val()=="PreoperacionalPendientes"  )  {
+      if ( $("#Reporte").val()=="PreoperacionalPendientes"  || $("#Reporte").val()=="AsistenciaPendientes"  )  {
 
       
           $("#divResumen1").show();
@@ -181,7 +181,7 @@ function detalleRegistro(Codigo_Registro){
         }
         });
 }
-
+ 
 function Generar(){
 
 
@@ -250,6 +250,8 @@ $('#btnMonitoreo').button('reset');
 }
 
 
+
+
 function Cerrar(){	
 	$('#myModalDetalle').modal('hide');
 }
@@ -295,7 +297,19 @@ function Descargar(){
 
         if($("#Reporte").val()=="PreoperacionalPendientes") {
           window.open("Reportes/rptPreoperacionalEnelPendientes.php?GenerarInicio="+$("#Desde").val() );
-        }else{
+        }
+        
+      
+       else if($("#Reporte").val()=="Asistencia") {
+        window.open("Reportes/rptAsistenciaEnel.php?GenerarInicio="+$("#Desde").val()+"&GenerarFinal="+$("#Hasta").val() );
+       }
+
+       else if($("#Reporte").val()=="AsistenciaPendientes") {
+         window.open("Reportes/rptAsistenciaEnelPendientes.php?GenerarInicio="+$("#Desde").val()+"&GenerarFinal="+$("#Hasta").val() );
+       }
+        
+        
+        else{
         window.open("Reportes/rptDetalleActividadesEspecialEnelRangoDeFechas.php?GenerarInicio="+$("#Desde").val()+"&GenerarFinal="+$("#Hasta").val() +"&Tipo="+$("#Reporte").val() );
 
         }
@@ -326,8 +340,11 @@ function ExportaFromatoEnel(Codigo_Registroennel){
  
 }
 
-
-
+function ExportaAsistenciaEnel(Codigo_Registroennel){   
+      window.open("Reportes/EnelAsistenciaFormato.php?Codigo_Registroennel="+Codigo_Registroennel); 
+ 
+}
+ 
 </script>
 <!-- //pie-chart --><!-- index page sales reviews visitors pie chart -->
 
@@ -626,8 +643,11 @@ function ExportaFromatoEnel(Codigo_Registroennel){
                                 <option value="Busquedadirecciones">Actualización de direcciones</option> 
                                 <option value="Preoperacional">Preoperacional Detallado</option> 
                                 <option value="PreoperacionalPendientes">Preoperacional Pendientes</option> 
+                                <option value="Asistencia">Asistencia detallado </option> 
+                                <option value="AsistenciaPendientes">Asistencia pendientes </option> 
                             </select>
-                        </div> 
+                        </div>  
+
   						<div class="col-md-3"  id="divBusqueda1">
                          	<p><i class="fa fa-user-o"></i>Filtro</p>
                             <select id="Filtro" name="Filtro" class="form-control"> 

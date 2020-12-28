@@ -24,7 +24,7 @@ function GenerarParametro($mysqli){
 
 
 
-	$consulta="SELECT p.cons,ag.nombre,p.producto,p.orden,p.guia,p.direccion,p.ciclo,p.cuenta,p.idventa,p.estado FROM ((proyectoespecialenel p 
+  $consulta="SELECT p.cons,ag.nombre,p.producto,p.orden,p.guia,p.direccion,p.ciclo,p.cuenta,p.idventa,p.estado FROM ((proyectoespecialenel p 
       INNER JOIN actividad a ON a.cons=p.codactividad) LEFT JOIN agentes ag ON ag.usuario=p.codagente)WHERE 
       p.".$_POST["GenerarFiltro"]."='".mysqli_real_escape_string($mysqli,$_POST["GenerarParametro"])."'    order by p.cons  ";
 $datos=mysqli_query($mysqli,$consulta);
@@ -64,44 +64,44 @@ $datos=mysqli_query($mysqli,$consulta);
         </tfoot>  <tbody> ';
 $cont=1;
                  
-			while($row=mysqli_fetch_row($datos)){ 
+      while($row=mysqli_fetch_row($datos)){ 
 
 
 
-	            if($row[9]=='Pendiente'){
-	                $st='style="background-color:#FF2C21; color:#fff;"';
-	                $estado="Pendiente"; 
-				}else{
-	                $estado=$row[9];
-					 if($row[9]=='EFECTIVO'){ 
-		                $st='style="background-color:#00FF2C; color:#fff;"';
-		             }else{ 
-		                $st='style="background-color:#FF9500; color:#fff;"';
-		             }
-		        }
+              if($row[9]=='Pendiente'){
+                  $st='style="background-color:#FF2C21; color:#fff;"';
+                  $estado="Pendiente"; 
+        }else{
+                  $estado=$row[9];
+           if($row[9]=='EFECTIVO'){ 
+                    $st='style="background-color:#00FF2C; color:#fff;"';
+                 }else{ 
+                    $st='style="background-color:#FF9500; color:#fff;"';
+                 }
+            }
 $CODD="'".$row[0]."'";
 
-	           if ($row[1]==""){
-              	$row[1]="NO ASIGNADO";
+             if ($row[1]==""){
+                $row[1]="NO ASIGNADO";
               }
-		           echo '<tr >
-		            <td  >'.$row[0].'</td>
-		             <td  >'.$row[1].'</td>
-		            <td  >'.$row[2].'</td>
-		            <td  >'.$row[3].'</td>
-		            <td  >'.$row[4].'</td>
-		            <td  >'.$row[5].'</td>
-		            <td  >'.$row[6].'</td>
-		            <td  >'.$row[7].'</td>
-		            <td  >'.$row[8].'</td>
-		            <td  '.$st.'>'.$estado.'</td>
-		            <td  >
+               echo '<tr >
+                <td  >'.$row[0].'</td>
+                 <td  >'.$row[1].'</td>
+                <td  >'.$row[2].'</td>
+                <td  >'.$row[3].'</td>
+                <td  >'.$row[4].'</td>
+                <td  >'.$row[5].'</td>
+                <td  >'.$row[6].'</td>
+                <td  >'.$row[7].'</td>
+                <td  >'.$row[8].'</td>
+                <td  '.$st.'>'.$estado.'</td>
+                <td  >
  <button type="button" onclick="detalleRegistro('.$CODD.');" class="btn btn-info" style="background-color:blue;padding:7px !important">
  <i class="fa fa-search "></i></button>
 
-		            </td>
-		            </tr>';
-					$cont++;
+                </td>
+                </tr>';
+          $cont++;
             }
  
        echo '</tbody></table>';
@@ -314,7 +314,119 @@ $cont=1;
  
        echo '</tbody></table>';
 
-      }else{
+      }
+
+//  ASISTENCIA
+//----------------------------------------------------------------------------------------------------------------------------------
+else{ 
+
+if ($_POST["GenerarTipoReporte"]=="Asistencia") { 
+
+
+  $consulta="SELECT a.nombre,a.usuario,fecha,e.cons,e.observaciones  FROM enelasistencia e INNER JOIN agentes a ON a.usuario= e.codagente WHERE 
+ e.fecha>='".mysqli_real_escape_string($mysqli,$_POST["GenerarDesde"])."' 
+ and  e.fecha<='".mysqli_real_escape_string($mysqli,$_POST["GenerarHasta"])."'    order by e.fecha desc,a.nombre asc ";
+ $datos=mysqli_query($mysqli,$consulta);
+//echo $consulta;
+    echo '
+    <table id="example" class="display dataTable" cellspacing="0" width="100%" style="font-size: 12px; width: 100%;text-align:center;margin-top: 20px !important" role="grid" aria-describedby="example_info">
+   <thead>
+     <tr> 
+     <th >cons</th>
+     <th >Nombre </th>
+     <th >Usuario</th>
+     <th >Fecha </th>
+     <th >Observaciones </th>
+     <th width="20">Opciones</th>
+     </tr>
+
+     </tr>
+   </thead><tfoot>
+     <tr>
+     <th >cons </th>
+     <th >Nombre </th>
+     <th >Usuario</th>
+     <th >Fecha </th>
+     <th >Observaciones </th>
+     <th width="20">Opciones</th>
+     </tr>
+   </tfoot>  <tbody> ';
+ $cont=1; 
+            
+ while($row=mysqli_fetch_row($datos)){ 
+
+    
+               echo '<tr >
+               <td  >'.$cont.'</td>
+               <td  >'.$row[0].'</td>
+               <td  >'.$row[1].'</td> 
+               <td  >'.$row[2].'</td>
+               <td  >'.$row[4].'</td>
+               
+           <td  >
+<button type="button" onclick="ExportaAsistenciaEnel('.$row[3].');" class="btn btn-info" style="background-color:blue;padding:7px !important">
+<i class="fa fa-file "></i></button>
+
+           </td>
+           </tr>';
+     $cont++;
+       }
+
+  echo '</tbody></table>';
+
+}
+//AsistenciaPendientes
+else {
+
+  if ($_POST["GenerarTipoReporte"]=="AsistenciaPendientes") {      
+
+  
+
+    $consulta="SELECT nombre,usuario,sesioninicio FROM agentes WHERE (unidad_negocio='ENEL CODENSA' 
+    OR unidad_negocio='ENEL REPARTO ESPECIAL' ) 
+    AND usuario NOT IN (SELECT codagente FROM `enelasistencia`
+    WHERE fecha='".mysqli_real_escape_string($mysqli,$_POST["GenerarDesde"])."') order by nombre  ";  
+  
+        $datos=mysqli_query($mysqli,$consulta);     
+      // echo $consulta;
+           echo '
+           <table id="example" class="display dataTable" cellspacing="0" width="100%" style="font-size: 12px; width: 100%;text-align:center;margin-top: 20px !important" role="grid" aria-describedby="example_info">
+          <thead>
+            <tr>   
+            <th >Agente</th>
+            <th >Usuario</th>
+            <th >Ultimo Login</th> 
+            </tr>
+  
+            </tr>
+          </thead><tfoot>
+            <tr>
+            <th >Agente</th>
+            <th >Usuario</th> 
+            <th >Ultimo Login</th> 
+            </tr>
+          </tfoot>  <tbody> ';
+  $cont=1;
+                   
+        while($row=mysqli_fetch_row($datos)){ 
+  
+  
+   
+                 echo '<tr >
+                  <td  >'.$row[0].'</td>
+                   <td  >'.$row[1].'</td>
+                  <td  >'.$row[2].'</td> 
+                  </tr>';
+            $cont++;
+              }
+   
+         echo '</tbody></table>';
+  
+        }
+
+//----------------------------------------------------------------------------------------------------------------------------------
+     
+        else{
              $consulta="SELECT p.cons,ag.nombre,p.producto,p.orden,p.guia,p.direccion,p.ciclo,p.cuenta,p.idventa,p.estado FROM ((proyectoespecialenel p 
             INNER JOIN actividad a ON a.cons=p.codactividad) LEFT JOIN agentes ag ON ag.usuario=p.codagente)WHERE 
             a.fecha>='".mysqli_real_escape_string($mysqli,$_POST["GenerarDesde"])."' 
@@ -397,10 +509,12 @@ $cont=1;
                   }
        
              echo '</tbody></table>';
+           }
+          }
         }
       }
   
-}
+}//end else segubdo general
 
 
 }
@@ -423,11 +537,11 @@ if(isset($_SESSION['LMNS_unidad'])){
 
 
 
-		if ($_POST["GenerarSeguimientoTipo"]=="velocidad") {
+    if ($_POST["GenerarSeguimientoTipo"]=="velocidad") {
             $consulta="SELECT DISTINCT(a.usuario),a.nombre FROM tracking t INNER JOIN agentes a ON a.usuario=t.usuario 
             WHERE t.fecha='".$_POST["GenerarSeguimientoFecha"]."' AND ".$completaconsulta." GROUP BY a.nombre "; 
 
-		           
+               
 
 
         $d1=mysqli_query($mysqli,$consulta);
@@ -558,8 +672,8 @@ while($r1=mysqli_fetch_row($d1)){
           </tr>
         </tfoot>  <tbody> ';
 
-		$cont=1;
-		while($r1=mysqli_fetch_row($d1)){ 
+    $cont=1;
+    while($r1=mysqli_fetch_row($d1)){ 
 
               echo '<tr >
             <td  >'.$cont.'</td>
@@ -572,11 +686,11 @@ while($r1=mysqli_fetch_row($d1)){
             </a>
          </td></tr>';
  $cont++;
-		}
+    }
 
 
 
-		}
+    }
 
 
           echo '</tbody></table>';
@@ -753,10 +867,10 @@ $kmh=0;
                                   $clase=' style="background-color:red " ';
                                 }
 
-    							$diferencia = distanceCalculation($latanterior, $lonanterior, $row[6], $row[7], "km", "");
-	   							 if (($diferencia."")!="NAN") {
-	                           	 	$kmh=round(((($diferencia/$tiempocalculo)*18)/5),0);
-	                            }
+                  $diferencia = distanceCalculation($latanterior, $lonanterior, $row[6], $row[7], "km", "");
+                   if (($diferencia."")!="NAN") {
+                                $kmh=round(((($diferencia/$tiempocalculo)*18)/5),0);
+                              }
                             } 
 
                         
@@ -772,9 +886,9 @@ $kmh=0;
                             <td  >'.$row[5].'</td>
                             </tr>'
                         ;$horaold=$row[0];
-                    	$cont++;
-                    	$latanterior=$row[6];
-						$lonanterior=$row[7];
+                      $cont++;
+                      $latanterior=$row[6];
+            $lonanterior=$row[7];
                   }
             
           }

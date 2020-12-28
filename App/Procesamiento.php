@@ -47,6 +47,10 @@
 			    guardaVehiculosEnel($mysqli);  
 			  }elseif ($_POST["Action"]=='guardaEnelPreoperacional') {
 			    guardaEnelPreoperacional($mysqli);  
+			  }elseif ($_POST["Action"]=='consultaEnelAsistencia') {
+			    consultaEnelAsistencia($mysqli);  
+			  }elseif ($_POST["Action"]=='guardaEnelAsitencia') {
+			    guardaEnelAsitencia($mysqli);  
 			  }else{
 			    $array=array();
 			    $array['estado']="400";
@@ -61,6 +65,89 @@
 	    echo json_encode($array);
 	  }  
 		
+
+
+
+function guardaEnelAsitencia($mysqli){
+  
+$consulta="INSERT INTO enelasistencia
+            (codagente,fecha,cedula,carnecodensa,carnearp,preoperacional,procedimiento,ropa,canguro,casco,bloqueador,guantes,imprermeables,gorra,botas,cartuchera,binoculares,linterna,planillero,detector,polainas,atomizador,celular,presentacion,mapa,salud,bateria,teclado,encendido,impresion,certificaciones,constancias,hojas,observaciones)
+
+VALUES ('".mysqli_real_escape_string($mysqli,$_POST["codagente"])."',
+        curdate(),
+        '".mysqli_real_escape_string($mysqli,$_POST["cedula"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["carnecodensa"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["carnearp"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["preoperacional"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["procedimiento"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["ropa"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["canguro"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["casco"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["bloqueador"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["guantes"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["imprermeables"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["gorra"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["botas"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["cartuchera"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["binoculares"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["linterna"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["planillero"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["detector"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["polainas"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["atomizador"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["celular"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["presentacion"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["mapa"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["salud"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["bateria"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["teclado"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["encendido"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["impresion"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["certificaciones"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["constancias"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["hojas"])."',
+        '".mysqli_real_escape_string($mysqli,$_POST["observaciones"])."'); "; 
+  if( $datos=mysqli_query($mysqli,$consulta) ){   
+ 
+
+    $array=array();
+    $array['mensaje']="Guardado";
+    header('Content-type: application/json');
+    echo json_encode($array);
+     
+  }else{ 
+    $array=array();
+    $array['mensaje']="No Guardado";
+    header('Content-type: application/json');
+    echo json_encode($array);
+  }
+
+
+}
+
+
+function consultaEnelAsistencia($mysqli){
+
+
+						$array=array(); 
+						$realizadahoy="NO";
+						$consulta="SELECT cons FROM enelasistencia WHERE 
+						codagente='".mysqli_real_escape_string($mysqli,$_POST["codAgente"])."' AND fecha=CURDATE() "; 
+						$datos=mysqli_query($mysqli,$consulta);
+						if($row=mysqli_fetch_row($datos)){  
+								$realizadahoy="SI";
+						}
+            $realizadahoy="NO";
+
+
+					$array['realizoHoy']=$realizadahoy; 
+					header('Content-type: application/json');
+					echo json_encode($array);
+        
+}
+
+
+
 
 
 function guardaEnelPreoperacional($mysqli){
@@ -1142,7 +1229,7 @@ values ". $valores[0]." ";
 function logearse($mysqli){
 
 
-   $consulta="SELECT  u.nombre,u.usuario,u.tipo,u.codempresa,a.unidad_negocio FROM usuarios  u INNER JOIN agentes a ON a.usuario=u.usuario
+   $consulta="SELECT  u.nombre,u.usuario,u.tipo,u.codempresa,a.unidad_negocio,a.desplazamiento FROM usuarios  u INNER JOIN agentes a ON a.usuario=u.usuario
   WHERE   u.usuario='".mysqli_real_escape_string($mysqli,$_POST["usuario"])."' 
   AND  u.pass='".mysqli_real_escape_string($mysqli,$_POST["pass"])."' AND  u.estado='Activo' AND  u.tipo='Agente'  "; 
 	$datos=mysqli_query($mysqli,$consulta);
@@ -1158,19 +1245,20 @@ function logearse($mysqli){
 					WHERE  usuario='".mysqli_real_escape_string($mysqli,$_POST["usuario"])."'  "; 
 					$datos=mysqli_query($mysqli,$consulta);
 
-					$array=array();
-					$array['estado']="200";
-					$array['nombreUsuario']=$row[0];
-					$array['codigoEmpresa']=$row[3];
-					$array['unidadNegocio']=$row[4];
-					header('Content-type: application/json');
-					echo json_encode($array);
-               
+    					$array=array();
+    					$array['estado']="200";
+    					$array['nombreUsuario']=$row[0];
+    					$array['codigoEmpresa']=$row[3];
+              $array['unidadNegocio']=$row[4];
+              $array['desplazamiento']=$row[5];
+    					header('Content-type: application/json');
+    					echo json_encode($array);
+                   
           }else{
-			$array=array();
-			$array['estado']="400";
-			header('Content-type: application/json');
-			echo json_encode($array);
+              $array=array();
+              $array['estado']="400";
+              header('Content-type: application/json');
+              echo json_encode($array);
           }
 }
 
